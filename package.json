@@ -1,0 +1,16 @@
+{
+  "name": "spam-aaron",
+  "version": "1.0.0",
+  "description": "un bot pour spam aaron mdr",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "chicken wings",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^13.5.0",
+    "nodemon": "^2.0.15"
+  }
+}

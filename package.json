@@ -4,9 +4,6 @@
   "description": "un bot pour spam aaron mdr",
   "main": "index.js",
   "devDependencies": {},
-  "engines": {
-    "node": ">=17.0.0"
-  },
   "scripts": {
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"

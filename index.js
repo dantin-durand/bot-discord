@@ -9,10 +9,10 @@ client.on("ready", () => {
   client.user.setPresence({
     activities: [
       {
-        name: "attendre de pouvoir spam Aaron",
+        name: "attendre d'être cancer",
       },
     ],
-    status: "dnd",
+    status: "online",
   });
 
   console.log(`Logged in as ${client.user.tag}!`);
@@ -26,6 +26,9 @@ client.on("interactionCreate", async (interaction) => {
     await cmd.execute(interaction, client);
   } else if (interaction.commandName === "phasmo") {
     const cmd = require("./commands/phasmo");
+    await cmd.execute(interaction);
+  } else if (interaction.commandName === "ping") {
+    const cmd = require("./commands/ping");
     await cmd.execute(interaction);
   }
 });

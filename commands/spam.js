@@ -5,6 +5,12 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("spam")
     .setDescription("Spam facilement Aaron :^)")
+    .addUserOption((option) =>
+      option
+        .setName("joueur")
+        .setDescription("le joueur à ping")
+        .setRequired(true)
+    )
     .addNumberOption((option) =>
       option
         .setName("nombre")
@@ -16,21 +22,31 @@ module.exports = {
     client.user.setPresence({
       activities: [
         {
-          name: "spam Aaron ptdr",
+          name: "spam ptdr",
         },
       ],
       status: "online",
     });
-    await interaction.reply("Ok, je commance à spammer Aaron :smirk: ");
-
-    let count = 0;
+    let valueCount = interaction.options._hoistedOptions[1].value;
     const channel = await interaction.guild.channels.cache.get(spam.channel);
 
-    let machine = setInterval(() => {
-      if (count >= interaction.options._hoistedOptions[0].value) {
-        channel.send("> T'as gagné... JE RIGOLE MDR 1/5 que ça recommence: ");
+    if (valueCount > 50) {
+      valueCount = 50;
+      channel.send(
+        "> Mdrrr t'es dans l'abus. Je vais spam 50 fois, pas plus bg :kissing_closed_eyes: "
+      );
+    }
+    await interaction.reply(
+      `Ok, je commance à spammer <@${interaction.options._hoistedOptions[0].value}> :smirk:`
+    );
 
-        if (Math.floor(Math.random() * 3) === 1) {
+    let count = 0;
+
+    let machine = setInterval(() => {
+      if (count >= interaction.options._hoistedOptions[1].value) {
+        channel.send("> T'as gag... JE RIGOLE MDR 1/5 que ça recommence: ");
+
+        if (Math.floor(Math.random() * 5) === 1) {
           channel.send(
             "https://tenor.com/view/push-to-start-gucci-mane-before-the-deal-song-start-it-up-turn-it-on-gif-23512192"
           );
@@ -44,7 +60,7 @@ module.exports = {
           client.user.setPresence({
             activities: [
               {
-                name: "attendre de pouvoir spam Aaron",
+                name: "attendre d'être cancer",
               },
             ],
             status: "dnd",
@@ -57,7 +73,7 @@ module.exports = {
       channel.send(
         spam.phrases[Math.floor(Math.random() * spam.phrases.length)].replace(
           "{PSEUDO}",
-          spam.user
+          `<@${interaction.options._hoistedOptions[0].value}>`
         )
       );
       count++;

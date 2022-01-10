@@ -1,5 +1,7 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { spam } = require("../config.json");
+const { User } = require("../models");
+const { Op } = require("sequelize");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -19,6 +21,33 @@ module.exports = {
     ),
 
   async execute(interaction, client) {
+    const userId = interaction.user.id;
+    const serverId = interaction.guildId;
+
+    const [user, created] = await User.findOrCreate({
+      where: { [Op.or]: [{ userId }] },
+      defaults: {
+        userId,
+        serverId,
+        count: 1,
+      },
+    });
+    if (!created) {
+      const userUpdate = await User.update(
+        {
+          count: Number(user.count) + 1,
+        },
+        {
+          where: {
+            id: user.id,
+          },
+        }
+      );
+      console.log("user updated -> ", userUpdate.count);
+    } else {
+      console.log("user created -> ", user.count);
+    }
+
     client.user.setPresence({
       activities: [
         {
@@ -27,6 +56,7 @@ module.exports = {
       ],
       status: "online",
     });
+
     let valueCount = interaction.options._hoistedOptions[1].value;
     const channel = await interaction.guild.channels.cache.get(spam.channel);
 
@@ -37,7 +67,7 @@ module.exports = {
       );
     }
     await interaction.reply(
-      `Ok, je commance à spammer <@${interaction.options._hoistedOptions[0].value}> :smirk:`
+      `Ok, je commence à spammer <@${interaction.options._hoistedOptions[0].value}> :smirk:`
     );
 
     let count = 0;

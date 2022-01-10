@@ -1,7 +1,11 @@
 const { Client, Intents } = require("discord.js");
 const { token, spam } = require("./config.json");
 const deployCommand = require("./deploy-commands");
+
 deployCommand.execute;
+
+const { User } = require("./models");
+const { Op } = require("sequelize");
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
@@ -14,6 +18,7 @@ client.on("ready", async () => {
     ],
     status: "online",
   });
+
   console.log(`Logged in as ${client.user.tag}!`);
 });
 
@@ -28,6 +33,12 @@ client.on("interactionCreate", async (interaction) => {
     await cmd.execute(interaction);
   } else if (interaction.commandName === "ping") {
     const cmd = require("./commands/ping");
+    await cmd.execute(interaction);
+  } else if (interaction.commandName === "spam-info") {
+    const cmd = require("./commands/spamInfo");
+    await cmd.execute(interaction);
+  } else if (interaction.commandName === "spam-classement") {
+    const cmd = require("./commands/spamClassement");
     await cmd.execute(interaction);
   }
 });

@@ -1,11 +1,11 @@
 const { Client, Intents } = require("discord.js");
-const { token, phasmo } = require("./config.json");
+const { token, spam } = require("./config.json");
 const deployCommand = require("./deploy-commands");
 deployCommand.execute;
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
-client.on("ready", () => {
+client.on("ready", async () => {
   client.user.setPresence({
     activities: [
       {
@@ -14,7 +14,6 @@ client.on("ready", () => {
     ],
     status: "online",
   });
-
   console.log(`Logged in as ${client.user.tag}!`);
 });
 

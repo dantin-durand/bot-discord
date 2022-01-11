@@ -3,7 +3,7 @@ const { phasmo } = require("../config.json");
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("phasmo")
+    .setName("spam-phasmo")
     .setDescription("Choisi une map de phasmo"),
   async execute(interaction) {
     await interaction.reply(

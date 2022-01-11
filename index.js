@@ -7,7 +7,13 @@ deployCommand.execute;
 const { User } = require("./models");
 const { Op } = require("sequelize");
 
-const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+const client = new Client({
+  intents: [
+    Intents.FLAGS.GUILDS,
+    Intents.FLAGS.GUILD_MESSAGES,
+    Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+  ],
+});
 
 client.on("ready", async () => {
   client.user.setPresence({
@@ -28,10 +34,10 @@ client.on("interactionCreate", async (interaction) => {
   if (interaction.commandName === "spam") {
     const cmd = require("./commands/spam");
     await cmd.execute(interaction, client);
-  } else if (interaction.commandName === "phasmo") {
+  } else if (interaction.commandName === "spam-phasmo") {
     const cmd = require("./commands/phasmo");
     await cmd.execute(interaction);
-  } else if (interaction.commandName === "ping") {
+  } else if (interaction.commandName === "spam-ping") {
     const cmd = require("./commands/ping");
     await cmd.execute(interaction);
   } else if (interaction.commandName === "spam-info") {
@@ -40,6 +46,49 @@ client.on("interactionCreate", async (interaction) => {
   } else if (interaction.commandName === "spam-classement") {
     const cmd = require("./commands/spamClassement");
     await cmd.execute(interaction);
+  } else if (interaction.commandName === "spam-chifoumi") {
+    const cmd = require("./commands/chifoumi");
+    await cmd.execute(interaction);
+  }
+});
+
+client.on("messageReactionAdd", async (reaction, user) => {
+  if (
+    reaction.message.channel.id === spam.channel &&
+    reaction.message.author.id !== user.id
+  ) {
+    if (
+      reaction.message.content.includes(
+        "Ok, je vais faire un chifoumi avec toi <@"
+      )
+    ) {
+      const userInMessage = reaction.message.content
+        .split("<@")[1]
+        .replace(">", "");
+
+      const channel = await client.channels.cache.get(spam.channel);
+
+      const reactionsBot = ["✋", "✌️", "✊"];
+
+      const reactionChoice =
+        reactionsBot[Math.floor(Math.random() * reactionsBot.length)];
+
+      if (reaction.emoji.name === "✌️" && reactionChoice === "✋") {
+        await channel.send(`**j'ai choisis ✋**, donc <@${user.id}> a gagné`);
+      } else if (reaction.emoji.name === "✊" && reactionChoice === "✌️") {
+        await channel.send(`**j'ai choisis ✌️**, donc <@${user.id}> a gagné`);
+      } else if (reaction.emoji.name === "✋" && reactionChoice === "✊") {
+        await channel.send(`**j'ai choisis ✊**, donc <@${user.id}> a gagné`);
+      } else if (reaction.emoji.name === reactionChoice) {
+        await channel.send(
+          `**j'ai choisis ${reactionChoice}**, mon créateur avait la flemme de faire un "rejouer" donc j'ai gagné <@${user.id}>`
+        );
+      } else {
+        await channel.send(
+          `**j'ai choisis ${reactionChoice}**, donc <@${user.id}> a perdu comme une merde`
+        );
+      }
+    }
   }
 });
 

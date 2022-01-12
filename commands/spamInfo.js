@@ -1,5 +1,4 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
-const { phasmo } = require("../config.json");
 const { User } = require("../models");
 const { Op } = require("sequelize");
 const { getLevel } = require("../helpers/getLevel");
@@ -22,6 +21,14 @@ module.exports = {
     } else {
       userId = interaction.user.id;
     }
+
+    const usersList = await User.findAll();
+
+    const users = usersList.sort(function (a, b) {
+      return -(a.count - b.count);
+    });
+
+    let userIndex = users.findIndex((user) => user.userId === userId);
     const serverId = interaction.guildId;
 
     const [user, created] = await User.findOrCreate({
@@ -40,11 +47,13 @@ module.exports = {
       await interaction.reply(
         `<@${userId}> a spam **${user.count} fois**, il est ${getLevel(
           user.count
-        )}`
+        )}\nClassement: **${userIndex + 1}/${users.length + 1}**`
       );
     } else {
       await interaction.reply(
-        `Tu as spam **${user.count} fois**, tu es ${getLevel(user.count)}`
+        `Tu as spam **${user.count} fois**, tu es ${getLevel(
+          user.count
+        )}\nClassement: **${userIndex + 1}/${users.length + 1}**`
       );
     }
   },

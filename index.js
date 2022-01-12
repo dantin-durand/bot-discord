@@ -1,5 +1,7 @@
+require("dotenv").config();
+const { DISCORD_TOKEN } = process.env;
 const { Client, Intents } = require("discord.js");
-const { token, spam } = require("./config.json");
+const { spam } = require("./config.json");
 const deployCommand = require("./deploy-commands");
 
 deployCommand.execute;
@@ -92,4 +94,4 @@ client.on("messageReactionAdd", async (reaction, user) => {
   }
 });
 
-client.login(token);
+client.login(DISCORD_TOKEN);

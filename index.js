@@ -36,6 +36,9 @@ client.on("interactionCreate", async (interaction) => {
   if (interaction.commandName === "spam") {
     const cmd = require("./commands/spam");
     await cmd.execute(interaction, client);
+  } else if (interaction.commandName === "spam-anniv") {
+    const cmd = require("./commands/spamAnniv");
+    await cmd.execute(interaction, client);
   } else if (interaction.commandName === "spam-phasmo") {
     const cmd = require("./commands/phasmo");
     await cmd.execute(interaction);

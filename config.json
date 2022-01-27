@@ -12,6 +12,15 @@
       "tu sais je vais relancer la commande hein... {PSEUDO}",
       "Bon tu viens phasmo ? {PSEUDO}",
       "N'oubliez pas de vous abonner :french_bread:"
+    ],
+    "anniv": [
+      "Bon anniversaire {PSEUDO} !",
+      "Wow un an de plus, bientôt la retraite {PSEUDO} !",
+      "Vas'y fais pas ton rat, donne un morceau de gateau {PSEUDO} !",
+      "Cette commande n'est pas un exemple concret de la flemme {PSEUDO}",
+      "Incroyable c'est ton anniv c'est fou ça non ??? {PSEUDO}",
+      "Là j'ai plus tellement d'idée mais tkt, joyeux anniversaire {PSEUDO} !",
+      "Joyeux blablabla {PSEUDO} !"
     ]
   },
   "phasmo": [

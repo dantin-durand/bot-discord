@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "un bot pour spam aaron mdr",
   "main": "index.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "sequelize-cli": "^6.4.1"
+  },
   "scripts": {
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -54,6 +54,18 @@ client.on("interactionCreate", async (interaction) => {
   } else if (interaction.commandName === "spam-chifoumi") {
     const cmd = require("./commands/chifoumi");
     await cmd.execute(interaction);
+  } else if (interaction.commandName === "group-create") {
+    const cmd = require("./commands/groupCreate");
+    await cmd.execute(interaction);
+  } else if (interaction.commandName === "group-add") {
+    const cmd = require("./commands/groupAdd");
+    await cmd.execute(interaction);
+  } else if (interaction.commandName === "group-kick") {
+    const cmd = require("./commands/groupKick");
+    await cmd.execute(interaction);
+  } else if (interaction.commandName === "group-spam") {
+    const cmd = require("./commands/groupSpam");
+    await cmd.execute(interaction);
   }
 });
 

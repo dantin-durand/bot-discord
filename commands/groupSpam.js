@@ -42,7 +42,9 @@ module.exports = {
 
     let groupList = JSON.parse(group.list);
     if (groupList.length) {
-      const channel = await interaction.guild.channels.cache.get(spam.channel);
+      const channel = await interaction.guild.channels.cache.get(
+        interaction.channelId
+      );
 
       await interaction.reply(
         `Ok, je commence à spammer le groupe **${groupName}** :smirk:`

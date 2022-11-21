@@ -58,7 +58,9 @@ module.exports = {
     });
 
     let valueCount = interaction.options._hoistedOptions[1].value;
-    const channel = await interaction.guild.channels.cache.get(spam.channel);
+    const channel = await interaction.guild.channels.cache.get(
+      interaction.channelId
+    );
 
     await interaction.reply(
       `Ok, je commence à spa.. Heu oui, juste souhaiter un joyeux anniv à <@${interaction.options._hoistedOptions[0].value}> :smirk:`

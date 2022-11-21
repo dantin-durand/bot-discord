@@ -58,7 +58,9 @@ module.exports = {
     });
 
     let valueCount = interaction.options._hoistedOptions[1].value;
-    const channel = await interaction.guild.channels.cache.get(spam.channel);
+    const channel = await interaction.guild.channels.cache.get(
+      interaction.channelId
+    );
 
     if (valueCount > 50) {
       valueCount = 50;

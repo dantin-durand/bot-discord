@@ -8,6 +8,7 @@ deployCommand.execute;
 
 const { User } = require("./models");
 const { Op } = require("sequelize");
+const { chifoumiResponse } = require("./reactions/chifoumi");
 
 const client = new Client({
   intents: [
@@ -70,43 +71,7 @@ client.on("interactionCreate", async (interaction) => {
 });
 
 client.on("messageReactionAdd", async (reaction, user) => {
-  if (
-    reaction.message.channel.id === spam.channel &&
-    reaction.message.author.id !== user.id
-  ) {
-    if (
-      reaction.message.content.includes(
-        "Ok, je vais faire un chifoumi avec toi <@"
-      )
-    ) {
-      const userInMessage = reaction.message.content
-        .split("<@")[1]
-        .replace(">", "");
-
-      const channel = await client.channels.cache.get(spam.channel);
-
-      const reactionsBot = ["✋", "✌️", "✊"];
-
-      const reactionChoice =
-        reactionsBot[Math.floor(Math.random() * reactionsBot.length)];
-
-      if (reaction.emoji.name === "✌️" && reactionChoice === "✋") {
-        await channel.send(`**j'ai choisis ✋**, donc <@${user.id}> a gagné`);
-      } else if (reaction.emoji.name === "✊" && reactionChoice === "✌️") {
-        await channel.send(`**j'ai choisis ✌️**, donc <@${user.id}> a gagné`);
-      } else if (reaction.emoji.name === "✋" && reactionChoice === "✊") {
-        await channel.send(`**j'ai choisis ✊**, donc <@${user.id}> a gagné`);
-      } else if (reaction.emoji.name === reactionChoice) {
-        await channel.send(
-          `**j'ai choisis ${reactionChoice}**, mon créateur avait la flemme de faire un "rejouer" donc j'ai gagné <@${user.id}>`
-        );
-      } else {
-        await channel.send(
-          `**j'ai choisis ${reactionChoice}**, donc <@${user.id}> a perdu comme une merde`
-        );
-      }
-    }
-  }
+  await chifoumiResponse(reaction, user, client);
 });
 
 client.login(DISCORD_TOKEN);

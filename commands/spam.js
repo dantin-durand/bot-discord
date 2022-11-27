@@ -58,8 +58,12 @@ module.exports = {
     });
 
     let valueCount = interaction.options._hoistedOptions[1].value;
-    const channel = await interaction.guild.channels.cache.get(
-      interaction.channelId
+
+    const channel = await interaction.guild.channels.create(
+      `【🫁】le-cancer ${interaction.options._hoistedOptions[0].value}`,
+      {
+        type: "GUILD_TEXT",
+      }
     );
 
     if (valueCount > 50) {
@@ -98,6 +102,10 @@ module.exports = {
             status: "dnd",
           });
           clearInterval(machine);
+          channel.send("`⚠️ suppression du channel dans 5 secondes...`");
+          setTimeout(() => {
+            channel.delete();
+          }, 5000);
           return;
         }
       }
